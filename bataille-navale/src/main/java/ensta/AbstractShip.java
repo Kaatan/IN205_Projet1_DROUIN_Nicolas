@@ -8,6 +8,7 @@ public abstract class AbstractShip{
     private char shipLabel; //correspond à la lattre affichée sur la grille. Ptet un char ?
     private int shipSize;
     private char shipDirection;
+    private int strikeCount;
 
     public void setDirection(char newOrientation){
         if (checkDirection(newOrientation)){
@@ -25,7 +26,19 @@ public abstract class AbstractShip{
         }
             System.out.println("Error : non valid orientation given.");
             return false;
+    }
+
+    public void addStrike(){
+        strikeCount++;
+    }
+
+    public boolean isSunk(){
+        if (strikeCount == shipSize){
+            return true;
         }
+        return false;
+    }
+
 
 
     public AbstractShip(String name, char label, int size, char orientation){

@@ -34,10 +34,10 @@ public class Player {
 
 
         do {
-            try{
+            //try{
                 AbstractShip s = ships[i]; //liste des bâteaux à placer, à déterminer en avance dans une initialisation d'une autre méthode
 
-                String msg = String.format("placer %d : %s(%d)", i + 1, s.getName(), s.getSize());
+                String msg = String.format("Placement n° %d : %s (taille %d)", i + 1, s.getName(), s.getSize());
                 System.out.println(msg); //affichage du message contenant le numéro du bateau à placer, son nom et sa taille
                 InputHelper.ShipInput res = InputHelper.readShipInput();//récupération des inputs joueur. La validation de l'input est effectuée dans cette fonction/
                 s.setDirection(res.orientation); //mise à jour de l'orientation
@@ -55,9 +55,9 @@ public class Player {
                 done = i == 5; //on place 5 bateaux
 
                 board.print();
-            } catch (Exception e) {
-                // nop
-            }
+            /*} catch (Exception e) {
+                System.err.println("Problem Occured");
+            }*/
 
         } while (!done);
     }

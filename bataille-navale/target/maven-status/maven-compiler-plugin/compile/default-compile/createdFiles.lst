@@ -1,13 +1,16 @@
 ensta\App.class
 ensta\Submarine.class
 ensta\InputHelper$ShipInput.class
+ensta\ColorUtil$Color.class
 ensta\Hit.class
 ensta\InputHelper$CoordInput.class
 ensta\IBoard.class
 ensta\Destroyer.class
 ensta\BattleShip.class
+ensta\ColorUtil.class
 ensta\AbstractShip.class
 ensta\InputHelper.class
 ensta\Player.class
+ensta\ShipState.class
 ensta\Carrier.class
 ensta\Board.class

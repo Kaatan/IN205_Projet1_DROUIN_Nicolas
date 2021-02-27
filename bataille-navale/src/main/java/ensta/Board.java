@@ -5,8 +5,8 @@ package ensta;
 
 public class Board implements IBoard { //like that ?
     private String boardName;
-    private boolean boardStrikes[];
-    private Character boardBoats[];
+    private Boolean boardStrikes[];
+    private ShipState boardBoats[];
     private int boardSize;
 
     public int getSize(){
@@ -16,13 +16,13 @@ public class Board implements IBoard { //like that ?
 
     private void Board_Maker(){ /** Initialise les tableaux de l'objet **/
         //System.out.println("Entered Board Maker\n");
-        boardStrikes = new boolean[boardSize*boardSize];
+        boardStrikes = new Boolean[boardSize*boardSize];
         for (int i =0; i<boardSize*boardSize; i++){
-            boardStrikes[i]=false;
+            boardStrikes[i]=null;
         }
-        boardBoats = new Character[boardSize*boardSize];
+        boardBoats = new ShipState[boardSize*boardSize];
         for (int i =0; i<boardSize*boardSize; i++){
-            boardBoats[i]='0';
+            boardBoats[i]= new ShipState(); //pas correct
         }
     }
 
@@ -61,6 +61,7 @@ public class Board implements IBoard { //like that ?
     }
 
     private String addBoardLine (int numLine){
+        Boolean tile;
         String exit = "";
         exit+= numLine+1 + " ";
         if (numLine<9){ // car à 10 il y a un char de plus
@@ -68,8 +69,9 @@ public class Board implements IBoard { //like that ?
         }
 
         for (int i = 0; i<boardSize; i++) { //prtie pour les bateaux
-            if (boardBoats[i + boardSize * numLine] != '0') {
-                exit += boardBoats[i + boardSize * numLine] + " ";
+            if (boardBoats[i + boardSize * numLine].getIfLinked() == true) {
+                exit += boardBoats[i + boardSize * numLine].toString() + " ";
+                //System.out.println("Is linked is true for tile (" + i +", "+numLine + ")");
             } else {
                 exit += ". ";
             }
@@ -77,8 +79,19 @@ public class Board implements IBoard { //like that ?
 
         exit+="    ";//Middleoffset
 
-        for (int i = boardSize; i<2*boardSize; i++){ //partie pour les touchés
-            exit += ". "; //temporaire
+        for (int i = 0; i<boardSize; i++){ //partie pour les touchés
+            tile = boardStrikes[i + boardSize * numLine];
+            if (tile == null){
+                exit += ". ";
+            }
+            else if (tile == true){
+                exit += ColorUtil.colorize("X ", ColorUtil.Color.RED);
+
+            }
+            else if (tile == false){
+                exit+= "X ";
+            }
+
         }
 
 
@@ -124,7 +137,7 @@ public class Board implements IBoard { //like that ?
 
 
     public boolean hasShip(int x, int y){
-        if (boardBoats[x+boardSize*y] != '0'){
+        if (boardBoats[x+boardSize*y].getIfLinked() == true){
             System.out.println("Err : Occupied Case");
             return true;
         }
@@ -140,9 +153,7 @@ public class Board implements IBoard { //like that ?
         return false;
     }
 
-    public void validShip(AbstractShip ship, int x, int y){
 
-    }
 
     public int putShip(AbstractShip ship, int x, int y){ //renvoie 1 si succès, 0  si échec
 
@@ -175,7 +186,7 @@ public class Board implements IBoard { //like that ?
             for (i=0; i<shipSize; i++ ){
                 x0 = x + i * AbstractShip.convertHorizDirec(shipDirection);
                 y0 = y + i*AbstractShip.convertVertDirec(shipDirection);
-                boardBoats[x0 + y0*boardSize] = shipLabel;
+                boardBoats[x0 + y0*boardSize].setShip(ship);
 
                 //System.out.println("Ship put at " + x0 + " and " + y0 + " placement number " + i + " and ship size is " + shipSize + "\n");
 
@@ -194,11 +205,15 @@ public class Board implements IBoard { //like that ?
 
     }
 
-    public Boolean getHit(int x, int y){
-        if (inBounds(x, y) && boardBoats[x + boardSize * y]!='0'){
+    public Boolean getHit(int x, int y){ //vérifie si la case est touchée ou si elle sra touchée lors du tir ?
+        if (inBounds(x, y) && boardBoats[x + boardSize * y].getIfLinked() == true){
             return true;
         }
         return false;
+    }
+
+    Hit sendHit(int x, int y){
+
     }
 
 }
