@@ -9,8 +9,8 @@ public abstract class AbstractShip{
     private int shipSize;
     private char shipDirection;
 
-    public void mutator(char newOrientation){
-        if (checkDirection(newOrientation)){ //à coder proprement
+    public void setDirection(char newOrientation){
+        if (checkDirection(newOrientation)){
             shipDirection = newOrientation;
         }
         else{
@@ -20,7 +20,7 @@ public abstract class AbstractShip{
     } //sert à changer l'orientation
 
     private boolean checkDirection(char direction){
-        if (direction == 'N' || direction == 'S' || direction == 'E' || direction == 'W'){
+        if (direction == 'n' || direction == 's' || direction == 'e' || direction == 'w'){
             return true;
         }
             System.out.println("Error : non valid orientation given.");
@@ -62,10 +62,10 @@ public abstract class AbstractShip{
     }
 
     public static int convertVertDirec(char direc){
-        if (direc=='N'){
+        if (direc=='n'){
             return -1;
         }
-        if (direc=='S'){
+        if (direc=='s'){
             return 1;
         }
         else{
@@ -74,10 +74,10 @@ public abstract class AbstractShip{
     }
 
     public static int convertHorizDirec(char direc){
-        if (direc=='E'){
+        if (direc=='e'){
             return 1;
         }
-        if (direc=='W'){
+        if (direc=='w'){
             return -1;
         }
         else{
@@ -96,8 +96,8 @@ class Destroyer extends AbstractShip{
     }
 }
 
-class SubMarine extends AbstractShip{
-    public SubMarine(String name, char orientation){
+class Submarine extends AbstractShip{
+    public Submarine(String name, char orientation){
         super(name, 'S', 3, orientation);
     }
 }

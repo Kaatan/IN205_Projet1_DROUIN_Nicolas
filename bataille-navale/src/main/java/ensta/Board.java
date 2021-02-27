@@ -133,15 +133,18 @@ public class Board implements IBoard { //like that ?
     }
 
     public boolean inBounds(int x, int y){
-        if (x < boardSize && x >= 0 && y < boardSize && y > 0){
+        if (x < boardSize && x >= 0 && y < boardSize && y >= 0){
             return true;
         }
         System.out.println("Err : Out of Bounds");
         return false;
     }
 
+    public void validShip(AbstractShip ship, int x, int y){
 
-    public void putShip(AbstractShip ship, int x, int y){
+    }
+
+    public int putShip(AbstractShip ship, int x, int y){ //renvoie 1 si succès, 0  si échec
 
         int x0;
         int y0;
@@ -151,27 +154,36 @@ public class Board implements IBoard { //like that ?
         char shipDirection = ship.getDirection();
         char shipLabel = ship.getLabel();
 
+
         while (i<shipSize && stop == 0){
             x0 = x + i* AbstractShip.convertHorizDirec(shipDirection); //pour les méthodes statics, mettre Class.method()
             y0 = y + i* AbstractShip.convertVertDirec(shipDirection);
 
             if (!(inBounds(x0, y0))){
-                stop = 1;
+                return 0;
+
 
             }
             if (hasShip(x0, y0)){
-                stop = 1;
+                return 0;
+
             }
             i++;
         }
 
         if (stop==0){
             for (i=0; i<shipSize; i++ ){
-                x0 = x+i * AbstractShip.convertHorizDirec(shipDirection);
-                y0 = y+i*AbstractShip.convertVertDirec(shipDirection);
+                x0 = x + i * AbstractShip.convertHorizDirec(shipDirection);
+                y0 = y + i*AbstractShip.convertVertDirec(shipDirection);
                 boardBoats[x0 + y0*boardSize] = shipLabel;
+
+                //System.out.println("Ship put at " + x0 + " and " + y0 + " placement number " + i + " and ship size is " + shipSize + "\n");
+
+
             }
+            return 1;
         }
+        return 0;
 
     }
 

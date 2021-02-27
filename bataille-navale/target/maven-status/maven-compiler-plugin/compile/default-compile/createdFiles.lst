@@ -1,8 +1,13 @@
-ensta\IBoard.class
 ensta\App.class
+ensta\Submarine.class
+ensta\InputHelper$ShipInput.class
+ensta\Hit.class
+ensta\InputHelper$CoordInput.class
+ensta\IBoard.class
 ensta\Destroyer.class
 ensta\BattleShip.class
-ensta\SubMarine.class
 ensta\AbstractShip.class
+ensta\InputHelper.class
+ensta\Player.class
 ensta\Carrier.class
 ensta\Board.class
