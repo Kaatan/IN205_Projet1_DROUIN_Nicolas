@@ -17,14 +17,14 @@ public class App
         /*Destroyer firstDestroyer = new Destroyer("Destroyer 1", 'S');
         SubMarine firstSub = new SubMarine("Submarine 1", 'E');
         BattleShip firstBattleShip = new BattleShip("BattleShip 1", 'W');
-        Carrier firstCarrier = new Carrier("Carrier 1", 'N');
+        Carrier firstCarrier = new Carrier("Carrier 1", 'N');*/
 
-        field.putShip(firstDestroyer, 0, 0);
+        /*field.putShip(firstDestroyer, 0, 0);
         field.putShip(firstSub, 10, 5);
         field.putShip(firstBattleShip, 3, 7);
-        field.putShip(firstCarrier, 0, 3);
+        field.putShip(firstCarrier, 0, 3);*/
 
-
+/*
         field.putShip(firstDestroyer, 1, 1);
         field.putShip(firstSub, 5, 5);
         field.putShip(firstBattleShip, 7, 7);
@@ -43,8 +43,22 @@ public class App
         Player player1 = new Player(field1, field2, ships);
 
         player1.putShips();
+        Hit hit = Hit.MISS;
+        for (int i = 0; i<10; i++){
+            //for (int j =0; j<10; j++){
+                hit = field1.sendHit(i, i);
+                System.out.println(hit.toString());
+                if (hit.getValue() == -1){
+                    field2.setHit(false, i, i);
+                }
+                    else{
+                    field2.setHit(true, i, i);
+            }
+            //}
+        }
 
         field1.print();
+        field2.print();
 
 
 

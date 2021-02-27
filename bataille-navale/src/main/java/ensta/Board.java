@@ -198,6 +198,9 @@ public class Board implements IBoard { //like that ?
 
     }
 
+    //Gestion des dégâts
+
+
     public void setHit(boolean hit, int x, int y){
         if (inBounds(x, y)){
             boardStrikes[x + y * boardSize] = hit;
@@ -212,9 +215,53 @@ public class Board implements IBoard { //like that ?
         return false;
     }
 
-    Hit sendHit(int x, int y){
 
+
+    public Hit shipConversion(char label){ //on peut utiliser fromInt du fichier Hit qui convertit la taille du navire en enum
+        Hit hit = Hit.MISS;
+        if (label == 'D'){
+            hit= Hit.DESTROYER;
+        }
+        if (label == 'S'){
+            hit = Hit.SUBMARINE;
+        }
+        if (label == 'C'){
+            hit = Hit.CARRIER;
+        }
+        if (label == 'B'){
+            hit = Hit.BATTLESHIP;
+        }
+        return hit;
     }
+
+    public Hit sendHit(int x, int y){
+        Hit hit = null;
+        ShipState tile = boardBoats[x + boardSize * y];
+        if ( tile.getIfLinked() == true){//on vérifie si on a bien un bateau en dessous
+            if (tile.isStruck()){ //on vérifie si la case n'a pas déjjà été touchée
+
+            }
+            else { //sinon, on la détruit
+                //on actualise d'abord le tableau des bâteaux :
+
+                tile.addStrike();
+
+                if (tile.isSunk()){ //si le bâteau a coulé à cause de ce tir,
+                    hit = shipConversion(tile.getShip().getLabel());
+                    System.out.println("Le navire de label " + tile.getShip().getLabel() + " a coulé");
+                }
+                else{ //le bâteau n'a pas coulé
+                    hit = Hit.STRIKE;
+                }
+            }
+
+        }
+        else{ //s'il n'y a pas de bâteau :
+            hit = Hit.MISS;
+        }
+        return hit;
+    }
+
 
 }
 

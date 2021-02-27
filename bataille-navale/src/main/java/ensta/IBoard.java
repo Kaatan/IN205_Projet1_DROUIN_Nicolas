@@ -40,10 +40,10 @@ public interface IBoard {
     Boolean getHit(int x, int y);
 
     /**
-     * Sends a hit at the given position
+     * Sends a hit at the given position => when the board recieves a strike
      * @param x
      * @param y
-     * @return status for the hit (eg : strike or miss)
+     * @return status for the hit (eg : strike or miss), so it can be used for the hit launcher
      */
     Hit sendHit(int x, int y);
 

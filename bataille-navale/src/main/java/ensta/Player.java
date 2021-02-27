@@ -69,10 +69,18 @@ public class Player {
         do {
             System.out.println("où frapper?");
             InputHelper.CoordInput hitInput = InputHelper.readCoordInput();
-            // TODO call sendHit on this.opponentBoard
+            hit = opponentBoard.sendHit(hitInput.x, hitInput.y);
+            // TODO call sendHit on this.opponentBoard : Done
 
             // TODO : Game expects sendHit to return BOTH hit result & hit coords.
             // return hit is obvious. But how to return coords at the same time ?
+            //Answer : no need to. Just update playerboard here with SetHit.
+            if (hit.getValue() == -1){
+                board.setHit(false, hitInput.x, hitInput.y);
+            }
+            else{
+                board.setHit(true, hitInput.x, hitInput.y);
+            }
         } while (!done);
 
         return hit;

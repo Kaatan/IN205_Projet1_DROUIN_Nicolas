@@ -33,7 +33,7 @@ public abstract class AbstractShip{
     }
 
     public boolean isSunk(){
-        if (strikeCount == shipSize){
+        if (strikeCount >= shipSize){
             return true;
         }
         return false;
