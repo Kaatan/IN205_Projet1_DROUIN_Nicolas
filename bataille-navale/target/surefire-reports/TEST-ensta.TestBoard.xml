@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="ensta.TestBoard" time="0.002" tests="0" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="ensta.TestBoard" time="0.001" tests="0" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="15"/>
     <property name="sun.cpu.isalist" value="amd64"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.class.path" value="C:\Users\nicol\Documents\Travail\2A\IN205\bataille-navale\target\test-classes;C:\Users\nicol\Documents\Travail\2A\IN205\bataille-navale\target\classes;C:\Users\nicol\.m2\repository\junit\junit\3.8.1\junit-3.8.1.jar;"/>
+    <property name="java.class.path" value="C:\Users\nicol\Documents\Travail\2A\IN205\IN205_Projet1_DROUIN_Nicolas\bataille-navale\target\test-classes;C:\Users\nicol\Documents\Travail\2A\IN205\IN205_Projet1_DROUIN_Nicolas\bataille-navale\target\classes;C:\Users\nicol\.m2\repository\junit\junit\3.8.1\junit-3.8.1.jar;"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="user.variant" value=""/>
@@ -15,9 +15,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="FR"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-15.0.2\bin"/>
-    <property name="sun.java.command" value="C:\Users\nicol\AppData\Local\Temp\surefire13533414252059198460\surefirebooter17402307538852963452.jar C:\Users\nicol\AppData\Local\Temp\surefire13533414252059198460 2021-02-09T12-16-53_081-jvmRun1 surefire1275723866355616420tmp surefire_012781200227184276127tmp"/>
+    <property name="sun.java.command" value="C:\Users\nicol\AppData\Local\Temp\surefire10941238779215543644\surefirebooter12321332250659085656.jar C:\Users\nicol\AppData\Local\Temp\surefire10941238779215543644 2021-02-16T12-07-26_103-jvmRun1 surefire2158013533247559123tmp surefire_012949248700511664756tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="C:\Users\nicol\Documents\Travail\2A\IN205\bataille-navale\target\test-classes;C:\Users\nicol\Documents\Travail\2A\IN205\bataille-navale\target\classes;C:\Users\nicol\.m2\repository\junit\junit\3.8.1\junit-3.8.1.jar;"/>
+    <property name="surefire.test.class.path" value="C:\Users\nicol\Documents\Travail\2A\IN205\IN205_Projet1_DROUIN_Nicolas\bataille-navale\target\test-classes;C:\Users\nicol\Documents\Travail\2A\IN205\IN205_Projet1_DROUIN_Nicolas\bataille-navale\target\classes;C:\Users\nicol\.m2\repository\junit\junit\3.8.1\junit-3.8.1.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\nicol"/>
     <property name="user.language" value="fr"/>
@@ -25,12 +25,12 @@
     <property name="java.version.date" value="2021-01-19"/>
     <property name="java.home" value="C:\Program Files\Java\jdk-15.0.2"/>
     <property name="file.separator" value="\"/>
-    <property name="basedir" value="C:\Users\nicol\Documents\Travail\2A\IN205\bataille-navale"/>
+    <property name="basedir" value="C:\Users\nicol\Documents\Travail\2A\IN205\IN205_Projet1_DROUIN_Nicolas\bataille-navale"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\nicol\AppData\Local\Temp\surefire13533414252059198460\surefirebooter17402307538852963452.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\nicol\AppData\Local\Temp\surefire10941238779215543644\surefirebooter12321332250659085656.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="15.0.2+7-27"/>
@@ -44,7 +44,7 @@
     <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
     <property name="java.io.tmpdir" value="C:\Users\nicol\AppData\Local\Temp\"/>
     <property name="java.version" value="15.0.2"/>
-    <property name="user.dir" value="C:\Users\nicol\Documents\Travail\2A\IN205\bataille-navale"/>
+    <property name="user.dir" value="C:\Users\nicol\Documents\Travail\2A\IN205\IN205_Projet1_DROUIN_Nicolas\bataille-navale"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="sun.os.patch.level" value=""/>
