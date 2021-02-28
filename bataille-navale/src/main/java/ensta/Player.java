@@ -40,13 +40,13 @@ public class Player {
                 String msg = String.format("Placement n° %d : %s (taille %d)", i + 1, s.getName(), s.getSize());
                 System.out.println(msg); //affichage du message contenant le numéro du bateau à placer, son nom et sa taille
                 InputHelper.ShipInput res = InputHelper.readShipInput();//récupération des inputs joueur. La validation de l'input est effectuée dans cette fonction/
-                s.setDirection(res.orientation); //mise à jour de l'orientation
+                s.setDirection(Orientation.fromChar(res.orientation)); //mise à jour de l'orientation
 
                 while (board.putShip(s, res.x, res.y)==0){ //boucle de vérification du placement.
                     System.out.println("Position incorrecte. Veuillez recommencer.");
                     res = InputHelper.readShipInput(); //On recommence, il y a eu une erreur.
                     //Traitement des inputs nécessaire
-                    s.setDirection(res.orientation); //mise à jour de l'orientation
+                    s.setDirection(Orientation.fromChar(res.orientation)); //mise à jour de l'orientation
 
 
                 }
@@ -67,7 +67,7 @@ public class Player {
         Hit hit = null;
 
         do {
-            System.out.println("où frapper?");
+            System.out.println("Où frapper?");
             InputHelper.CoordInput hitInput = InputHelper.readCoordInput();
             hit = opponentBoard.sendHit(hitInput.x, hitInput.y);
             // TODO call sendHit on this.opponentBoard : Done

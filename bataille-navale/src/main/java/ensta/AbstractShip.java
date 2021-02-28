@@ -1,32 +1,17 @@
 package ensta;
 
-
-
 public abstract class AbstractShip{
 
     private String shipName;
     private char shipLabel; //correspond à la lattre affichée sur la grille. Ptet un char ?
     private int shipSize;
-    private char shipDirection;
+    private Orientation shipDirection;
     private int strikeCount;
 
-    public void setDirection(char newOrientation){
-        if (checkDirection(newOrientation)){
-            shipDirection = newOrientation;
-        }
-        else{
-
-        }
-
+    public void setDirection(Orientation newOrientation){
+        shipDirection = newOrientation;
     } //sert à changer l'orientation
 
-    private boolean checkDirection(char direction){
-        if (direction == 'n' || direction == 's' || direction == 'e' || direction == 'w'){
-            return true;
-        }
-            System.out.println("Error : non valid orientation given.");
-            return false;
-    }
 
     public void addStrike(){
         strikeCount++;
@@ -41,17 +26,11 @@ public abstract class AbstractShip{
 
 
 
-    public AbstractShip(String name, char label, int size, char orientation){
+    public AbstractShip(String name, char label, int size, Orientation orientation){
         shipName=name;
         shipLabel=label;
         shipSize=size;
-
-        if(checkDirection(orientation)){
-            shipDirection = orientation;
-        }
-        else{
-            shipDirection = 'o'; //possiblement pas exact
-        }
+        shipDirection = orientation;
 
     }
 
@@ -70,15 +49,16 @@ public abstract class AbstractShip{
         return shipSize;
     }
 
-    public char getDirection(){
+    public Orientation getDirection(){
         return shipDirection;
     }
 
-    public static int convertVertDirec(char direc){
-        if (direc=='n'){
+    public static int convertVertDirec(Orientation orientation){
+
+        if (orientation == Orientation.NORTH){
             return -1;
         }
-        if (direc=='s'){
+        if (orientation == Orientation.SOUTH )  {
             return 1;
         }
         else{
@@ -86,11 +66,13 @@ public abstract class AbstractShip{
         }
     }
 
-    public static int convertHorizDirec(char direc){
-        if (direc=='e'){
+    public static int convertHorizDirec(Orientation orientation){
+
+
+        if (orientation == Orientation.EAST){
             return 1;
         }
-        if (direc=='w'){
+        if (orientation == Orientation.WEST){
             return -1;
         }
         else{
@@ -104,25 +86,38 @@ public abstract class AbstractShip{
 
 //à mettre dans des fichiers dédiés
 class Destroyer extends AbstractShip{
-    public Destroyer(String name, char orientation){
+    public Destroyer(String name, Orientation orientation){
         super(name, 'D', 2, orientation);
+    }
+    public Destroyer(){
+        super("Destroyer", 'D', 2, Orientation.EAST);
     }
 }
 
 class Submarine extends AbstractShip{
-    public Submarine(String name, char orientation){
+    public Submarine(String name, Orientation orientation){
         super(name, 'S', 3, orientation);
+    }
+
+    public Submarine(){
+        super("Submarine", 'S', 3, Orientation.EAST);
     }
 }
 
 class BattleShip extends AbstractShip{
-    public BattleShip(String name, char orientation){
+    public BattleShip(String name, Orientation orientation){
         super(name, 'B', 4, orientation);
+    }
+    public BattleShip(){
+        super("Battleship", 'B', 4, Orientation.EAST);
     }
 }
 
 class Carrier extends AbstractShip{
-    public Carrier(String name, char orientation){
+    public Carrier(String name, Orientation orientation){
         super(name, 'C', 5, orientation);
+    }
+    public Carrier(){
+        super("Carrier", 'C', 5, Orientation.EAST);
     }
 }

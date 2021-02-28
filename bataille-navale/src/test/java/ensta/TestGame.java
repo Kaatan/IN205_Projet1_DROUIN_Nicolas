@@ -1,6 +1,6 @@
 package ensta;
 
-public class App {
+public class TestGame {
     private static void sleep(int ms) {
         try {
             Thread.sleep(ms);
@@ -26,32 +26,24 @@ public class App {
         ships[4]=new Carrier();
 
         BattleShipsAI ai = new BattleShipsAI(field1, field1);
-        System.out.println("Ceated new Ai");
-
-
-        ai.putShips(ships);
-
-        field1.print();
 
         int counter = 0;
         int[] coords = {0, 0};
         Hit hit = null;
 
-
-        System.out.println("Entered Fire process");
         while (counter<5){
+
+
 
             hit = ai.sendHit(coords);
             if (hit.getValue() > 0){ //un navire a été coulé
                 counter++;
-                System.out.println(hit.toString() + " a été coulé. " + (5-counter) + " restants.");
+                System.out.println(hit.toString() + " a été coulé.");
             }
-            field1.print();
-            sleep(1000);
 
 
         }
-
+        field1.print();
 
 
 
