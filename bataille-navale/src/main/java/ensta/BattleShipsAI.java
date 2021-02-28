@@ -52,6 +52,8 @@ public class BattleShipsAI implements Serializable {
      * Méthodes publiques
      */
 
+
+
     /**
      * Put the ships on owned board.
      * @param ships the ships to put
@@ -74,7 +76,7 @@ public class BattleShipsAI implements Serializable {
 
             } while(board.putShip(ship, x, y) == 0);
 
-            System.out.println("Put ship n° " + i);
+            //System.out.println("Put ship n° " + i);
             i++;
 
 
@@ -89,14 +91,14 @@ public class BattleShipsAI implements Serializable {
      */
     public Hit sendHit(int[] coords) { //on stocke les données dans coords
 
-        System.out.println("Entered AI sendHit function");
+        //System.out.println("Entered AI sendHit function");
 
         int res[] = null;
         if (coords == null || coords.length < 2) {
             throw new IllegalArgumentException("must provide an initialized array of size 2");
         }
 
-        System.out.println("passed error verification section");
+        //System.out.println("passed error verification section");
 
         // already found strike & orientation?
         if (lastVertical != null) {
@@ -124,15 +126,15 @@ public class BattleShipsAI implements Serializable {
             }
         }
 
-        System.out.println("Passed memory verification section");
+        //System.out.println("Passed memory verification section");
 
         if (lastStrike == null) {
-            System.out.println("AI chose random coords");
+
             res = pickRandomCoord();
 
         }
 
-        System.out.println("Ai chose to fire at target " + res[0] + ", " + res[1]);
+        //System.out.println("Ai chose to fire at target " + res[0] + ", " + res[1]);
 
         Hit hit = opponent.sendHit(res[0], res[1]);
         board.setHit(hit != Hit.MISS, res[0], res[1]);
@@ -152,6 +154,16 @@ public class BattleShipsAI implements Serializable {
     /* ***
      * Méthodes privées
      */
+
+
+    private static void sleep(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private boolean canPutShip(AbstractShip ship, int x, int y) {
         Orientation o = ship.getDirection();
@@ -203,7 +215,7 @@ public class BattleShipsAI implements Serializable {
 
     private int[] pickRandomCoord() {
 
-        System.out.println("Entered random coordinates generation");
+        //System.out.println("Entered random coordinates generation");
 
         Random rnd = new Random();
         int x;
@@ -212,7 +224,7 @@ public class BattleShipsAI implements Serializable {
         do {
             x = rnd.nextInt(size);
             y = rnd.nextInt(size);
-            System.out.println("Last chosen coordinates : " + x + ", " + y + " among " + size);
+            //System.out.println("Last chosen coordinates : " + x + ", " + y + " among " + size);
         } while (!isUndiscovered(x, y));
 
         return new int[] {x, y};

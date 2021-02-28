@@ -15,9 +15,11 @@ public abstract class AbstractShip{
 
     public void addStrike(){
         strikeCount++;
+        //System.out.println("number of received strikes is " + strikeCount + " while total size is " + shipSize);
     }
 
     public boolean isSunk(){
+        //System.out.println("From isSunk : number of received strikes is " + strikeCount + " while total size is " + shipSize + " and Label is " + shipLabel);
         if (strikeCount >= shipSize){
             return true;
         }
@@ -31,6 +33,7 @@ public abstract class AbstractShip{
         shipLabel=label;
         shipSize=size;
         shipDirection = orientation;
+        strikeCount = 0;
 
     }
 

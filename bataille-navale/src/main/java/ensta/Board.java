@@ -138,7 +138,7 @@ public class Board implements IBoard { //like that ?
 
     public boolean hasShip(int x, int y){
         if (boardBoats[x+boardSize*y].getIfLinked() == true){
-            System.out.println("Err : Occupied Case");
+            System.err.println("Err : Occupied Case");
             return true;
         }
 
@@ -149,7 +149,7 @@ public class Board implements IBoard { //like that ?
         if (x < boardSize && x >= 0 && y < boardSize && y >= 0){
             return true;
         }
-        System.out.println("Err : Out of Bounds");
+        System.err.println("Err : Out of Bounds");
         return false;
     }
 
@@ -187,7 +187,7 @@ public class Board implements IBoard { //like that ?
                 y0 = y + i*AbstractShip.convertVertDirec(shipDirection);
                 boardBoats[x0 + y0*boardSize].setShip(ship);
 
-                System.out.println("Ship put at " + x0 + " and " + y0 + " placement number " + i + " and ship size is " + shipSize + "\n");
+                //System.out.println("Ship put at " + x0 + " and " + y0 + " placement number " + i + " and ship size is " + shipSize + "\n");
 
 
             }
@@ -235,20 +235,23 @@ public class Board implements IBoard { //like that ?
 
     public Hit sendHit(int x, int y){
         Hit hit = null;
+        if (!inBounds(x, y)){
+            return null;
+        }
         ShipState tile = boardBoats[x + boardSize * y];
         if ( tile.getIfLinked() == true){//on vérifie si on a bien un bateau en dessous
             if (tile.isStruck()){ //on vérifie si la case n'a pas déjjà été touchée
-                System.out.println("Case détruite touchée à nouveau en " + (char)('A'+x) + ", " + y);
+                System.out.println("Case détruite touchée à nouveau en " + (char)('A'+x) + ", " + (y+1));
             }
             else { //sinon, on la détruit
                 //on actualise d'abord le tableau des bâteaux :
-                System.out.println("Navire touché en " + (char)('A'+x) + ", " + y);
+                //System.out.println("Navire touché en " + (char)('A'+x) + ", " + (y+1));
                 tile.addStrike();
 
                 if (tile.isSunk()){ //si le bâteau a coulé à cause de ce tir,
                     //hit = shipConversion(tile.getShip().getLabel());
                     hit = Hit.fromInt(tile.getShip().getSize());
-                    System.out.println("Le navire de label " + tile.getShip().getLabel() + " a coulé");
+                    //System.out.println("Le navire de label " + tile.getShip().getLabel() + " a coulé");
                 }
                 else{ //le bâteau n'a pas coulé
 
@@ -258,7 +261,7 @@ public class Board implements IBoard { //like that ?
 
         }
         else{ //s'il n'y a pas de bâteau :
-            System.out.println("Manqué en " + (char)('A'+x) + ", " + y);
+            //System.out.println("Manqué en " + (char)('A'+x) + ", " + (y+1));
             hit = Hit.MISS;
         }
         return hit;

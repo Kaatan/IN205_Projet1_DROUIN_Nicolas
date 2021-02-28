@@ -28,7 +28,7 @@ public class Player {
     /**
      * Read keyboard input to get ships coordinates. Place ships on given coodrinates.
      */
-    public void putShips() {
+    public void putShips(int numberShips) {
         boolean done = false;
         int i = 0;
 
@@ -52,7 +52,7 @@ public class Player {
                 }
 
                 ++i;
-                done = i == 5; //on place 5 bateaux
+                done = i == numberShips; //on place 5 bateaux
 
                 board.print();
             /*} catch (Exception e) {
@@ -63,8 +63,9 @@ public class Player {
     }
 
     public Hit sendHit(int[] coords) {
-        boolean done = true;
+        boolean done = false;
         Hit hit = null;
+        int x = 0, y = 0;
 
         do {
             System.out.println("Où frapper?");
@@ -73,15 +74,26 @@ public class Player {
             // TODO call sendHit on this.opponentBoard : Done
 
             // TODO : Game expects sendHit to return BOTH hit result & hit coords.
-            // return hit is obvious. But how to return coords at the same time ?
+            // return hit is obvious. But how to return coords at the same time ? You don't, they are printed from the board class anways.
             //Answer : no need to. Just update playerboard here with SetHit.
-            if (hit.getValue() == -1){
-                board.setHit(false, hitInput.x, hitInput.y);
-            }
-            else{
-                board.setHit(true, hitInput.x, hitInput.y);
+            //Else you can just use a table in arguments and fill it.
+
+            if (hit!=null){ //vérification de si le tir était valide
+
+                if (hit.getValue() == -1){
+                    board.setHit(false, hitInput.x, hitInput.y);
+                }
+                else{
+                    board.setHit(true, hitInput.x, hitInput.y);
+                }
+                done = true;
+                x = hitInput.x;
+                y = hitInput.y;
             }
         } while (!done);
+
+        coords[0] = x;
+        coords[1] = y;
 
         return hit;
     }

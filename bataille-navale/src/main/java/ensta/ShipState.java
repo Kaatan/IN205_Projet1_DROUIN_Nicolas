@@ -49,13 +49,13 @@ public class ShipState{
     }
 
     public void setShip(AbstractShip ship){
-        System.out.println("Called method that sets isLinked to True");
+
         mainShip = ship;
         isLinked = true;
     }
 
     public ShipState(AbstractShip mainShip){
-        System.out.println("Called constructor that sets isLinked to true");
+
         this.mainShip = mainShip;
         struck = false;
         isLinked = true;
