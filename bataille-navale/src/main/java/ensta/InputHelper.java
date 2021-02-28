@@ -29,6 +29,11 @@ public final class InputHelper {
     /* **
      * Méthodes de la classe InputHelper
      */
+
+    /**
+     * récupère les données utilisateurs (pour le placement des bateaux) et les transcrit en données exploitables
+     * @return les dites données
+     */
     public static ShipInput readShipInput() {
         @SuppressWarnings("resource")
         Scanner sin = new Scanner(System.in); //réception de l'input
@@ -64,6 +69,10 @@ public final class InputHelper {
         return res;
     }
 
+    /**
+     * récupère les données utilisateurs (pour les tirs) et les transcrit en données exploitables
+     * @return les dites données
+     */
     public static CoordInput readCoordInput() {
         @SuppressWarnings("resource")
         Scanner sin = new Scanner(System.in);

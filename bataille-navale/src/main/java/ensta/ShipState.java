@@ -1,5 +1,8 @@
 package ensta;
 
+/**
+ * Classe intermédiaire entre le ship et le board
+ */
 public class ShipState{
     protected AbstractShip mainShip;
     protected boolean struck;
@@ -13,13 +16,22 @@ public class ShipState{
         }
     }
 
+    /**
+     *
+     * @return true si le ShipState (= case) est lié à un bateau.
+     */
     public boolean getIfLinked(){
         return isLinked;
     }
 
+    /**
+     *
+     * @return true si la case a été touchée
+     */
     public boolean isStruck(){
         return struck;
     }
+
 
     public String toString(){
         if (mainShip == null && isLinked==true){
@@ -28,9 +40,9 @@ public class ShipState{
 
         if (isLinked && mainShip!=null){
             char label = mainShip.getLabel();
-            String ret = Character.toString(label); //récupération du label
+            String ret = Character.toString(label);
             if (struck){
-                ret = ColorUtil.colorize(ret, ColorUtil.Color.RED); //coloration du label
+                ret = ColorUtil.colorize(ret, ColorUtil.Color.RED);
             }
 
 
@@ -48,12 +60,20 @@ public class ShipState{
         return mainShip;
     }
 
+    /**
+     * Associe la ase à un bateau existant
+     * @param ship
+     */
     public void setShip(AbstractShip ship){
 
         mainShip = ship;
         isLinked = true;
     }
 
+    /**
+     * Constructeur valué
+     * @param mainShip
+     */
     public ShipState(AbstractShip mainShip){
 
         this.mainShip = mainShip;
@@ -61,8 +81,11 @@ public class ShipState{
         isLinked = true;
     }
 
+    /**
+     * Constructeur par défaut
+     */
     public ShipState(){
-        //System.out.println("Called constructor that sets isLinked to false");
+
         struck = false;
         isLinked = false;
     }

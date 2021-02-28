@@ -34,34 +34,33 @@ public class Player {
 
 
         do {
-            //try{
-                AbstractShip s = ships[i]; //liste des bâteaux à placer, à déterminer en avance dans une initialisation d'une autre méthode
-
+                AbstractShip s = ships[i];
                 String msg = String.format("Placement n° %d : %s (taille %d)", i + 1, s.getName(), s.getSize());
-                System.out.println(msg); //affichage du message contenant le numéro du bateau à placer, son nom et sa taille
-                InputHelper.ShipInput res = InputHelper.readShipInput();//récupération des inputs joueur. La validation de l'input est effectuée dans cette fonction/
-                s.setDirection(Orientation.fromChar(res.orientation)); //mise à jour de l'orientation
+                System.out.println(msg);
+                InputHelper.ShipInput res = InputHelper.readShipInput();
+                s.setOrientation(Orientation.fromChar(res.orientation));
 
-                while (board.putShip(s, res.x, res.y)==0){ //boucle de vérification du placement.
+                //Equivalent d'un try catch
+                while (board.putShip(s, res.x, res.y)==0){
                     System.out.println("Position incorrecte. Veuillez recommencer.");
-                    res = InputHelper.readShipInput(); //On recommence, il y a eu une erreur.
-                    //Traitement des inputs nécessaire
-                    s.setDirection(Orientation.fromChar(res.orientation)); //mise à jour de l'orientation
-
-
+                    res = InputHelper.readShipInput();
+                    s.setOrientation(Orientation.fromChar(res.orientation));
                 }
-
                 ++i;
-                done = i == numberShips; //on place 5 bateaux
+                done = i == numberShips;
 
                 board.print();
-            /*} catch (Exception e) {
-                System.err.println("Problem Occured");
-            }*/
+
 
         } while (!done);
     }
 
+    /**
+     * Envoie un hit aux coordonnées données sur le board de l'adversaire
+     * Marque son propre board en fonction du résultat
+     * @param coords
+     * @return
+     */
     public Hit sendHit(int[] coords) {
         boolean done = false;
         Hit hit = null;
@@ -71,14 +70,9 @@ public class Player {
             System.out.println("Où frapper?");
             InputHelper.CoordInput hitInput = InputHelper.readCoordInput();
             hit = opponentBoard.sendHit(hitInput.x, hitInput.y);
-            // TODO call sendHit on this.opponentBoard : Done
 
-            // TODO : Game expects sendHit to return BOTH hit result & hit coords.
-            // return hit is obvious. But how to return coords at the same time ? You don't, they are printed from the board class anways.
-            //Answer : no need to. Just update playerboard here with SetHit.
-            //Else you can just use a table in arguments and fill it.
 
-            if (hit!=null){ //vérification de si le tir était valide
+            if (hit!=null){
 
                 if (hit.getValue() == -1){
                     board.setHit(false, hitInput.x, hitInput.y);
@@ -98,11 +92,19 @@ public class Player {
         return hit;
     }
 
+    /**
+     *
+     * @return les bateaux du joueur
+     */
     public AbstractShip[] getShips() {
         return ships;
     }
 
-    public void setShips(AbstractShip[] ships) { //sert à mettre à jour les bâteaux d'un joueur : à faire dans le main.
+    /**
+     * Fonction inutilisée permettant de mettre à jour les bateaux d'un joueur.
+     * @param ships
+     */
+    public void setShips(AbstractShip[] ships) {
         this.ships = ships;
     }
 }

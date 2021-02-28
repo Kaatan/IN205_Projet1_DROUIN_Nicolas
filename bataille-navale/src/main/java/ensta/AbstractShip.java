@@ -3,23 +3,33 @@ package ensta;
 public abstract class AbstractShip{
 
     private String shipName;
-    private char shipLabel; //correspond à la lattre affichée sur la grille. Ptet un char ?
+    private char shipLabel;
     private int shipSize;
-    private Orientation shipDirection;
+    private Orientation shipOrientation;
     private int strikeCount;
 
-    public void setDirection(Orientation newOrientation){
-        shipDirection = newOrientation;
-    } //sert à changer l'orientation
-
-
-    public void addStrike(){
-        strikeCount++;
-        //System.out.println("number of received strikes is " + strikeCount + " while total size is " + shipSize);
+    /**
+     *
+     * @param newOrientation
+     */
+    public void setOrientation(Orientation newOrientation){
+        shipOrientation = newOrientation;
     }
 
+    /**
+     * Adds 1 to the number of strikes received bby the ship
+     */
+    public void addStrike(){
+        strikeCount++;
+
+    }
+
+    /**
+     * check if the number of strikes is equal (or more) to the length (and therefore max amount of strikes possible) of the ship
+     * @return true if ship is sunk
+     */
     public boolean isSunk(){
-        //System.out.println("From isSunk : number of received strikes is " + strikeCount + " while total size is " + shipSize + " and Label is " + shipLabel);
+
         if (strikeCount >= shipSize){
             return true;
         }
@@ -27,35 +37,57 @@ public abstract class AbstractShip{
     }
 
 
-
+    /**
+     * Valued Constructor for the ship
+     * @param name
+     * @param label
+     * @param size
+     * @param orientation
+     */
     public AbstractShip(String name, char label, int size, Orientation orientation){
         shipName=name;
         shipLabel=label;
         shipSize=size;
-        shipDirection = orientation;
+        shipOrientation = orientation;
         strikeCount = 0;
 
     }
 
-    //public abstract AbstractShip(String name, char orientation);
 
-
+    /**
+     * @return name of ship
+     */
     public String getName(){
         return shipName;
     }
 
+    /**
+     * @return label of ship
+     */
     public char getLabel(){
         return shipLabel;
     }
 
+    /**
+     * @return size of ship
+     */
     public int getSize(){
         return shipSize;
     }
 
-    public Orientation getDirection(){
-        return shipDirection;
+    /**
+     *
+     * @return orientation of the ship, in form of an object of the orientation class
+     */
+    public Orientation getOrientation(){
+        return shipOrientation;
     }
 
+    /**
+     * receives an orientation and returns a non null value if the orientation is vertical, which sign depends on direction.
+     * @param orientation,
+     * @return value for calculus in other fonctions
+     */
     public static int convertVertDirec(Orientation orientation){
 
         if (orientation == Orientation.NORTH){
@@ -69,8 +101,12 @@ public abstract class AbstractShip{
         }
     }
 
+    /**
+     * receives an orientation and returns a non null value if the orientation is horizontal, which sign depends on direction.
+     * @param orientation,
+     * @return value for calculus in other fonctions
+     */
     public static int convertHorizDirec(Orientation orientation){
-
 
         if (orientation == Orientation.EAST){
             return 1;
@@ -82,45 +118,7 @@ public abstract class AbstractShip{
             return 0;
         }
     }
-
 }
 
 
 
-//à mettre dans des fichiers dédiés
-class Destroyer extends AbstractShip{
-    public Destroyer(String name, Orientation orientation){
-        super(name, 'D', 2, orientation);
-    }
-    public Destroyer(){
-        super("Destroyer", 'D', 2, Orientation.EAST);
-    }
-}
-
-class Submarine extends AbstractShip{
-    public Submarine(String name, Orientation orientation){
-        super(name, 'S', 3, orientation);
-    }
-
-    public Submarine(){
-        super("Submarine", 'S', 3, Orientation.EAST);
-    }
-}
-
-class BattleShip extends AbstractShip{
-    public BattleShip(String name, Orientation orientation){
-        super(name, 'B', 4, orientation);
-    }
-    public BattleShip(){
-        super("Battleship", 'B', 4, Orientation.EAST);
-    }
-}
-
-class Carrier extends AbstractShip{
-    public Carrier(String name, Orientation orientation){
-        super(name, 'C', 5, orientation);
-    }
-    public Carrier(){
-        super("Carrier", 'C', 5, Orientation.EAST);
-    }
-}

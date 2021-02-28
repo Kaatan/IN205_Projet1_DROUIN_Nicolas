@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="FR"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-15.0.2\bin"/>
-    <property name="sun.java.command" value="C:\Users\nicol\AppData\Local\Temp\surefire6501989250427100652\surefirebooter15926953235748581968.jar C:\Users\nicol\AppData\Local\Temp\surefire6501989250427100652 2021-02-28T20-39-05_771-jvmRun1 surefire10615952310984734099tmp surefire_011465018491738191957tmp"/>
+    <property name="sun.java.command" value="C:\Users\nicol\AppData\Local\Temp\surefire3942970198101821880\surefirebooter9128809931463553680.jar C:\Users\nicol\AppData\Local\Temp\surefire3942970198101821880 2021-02-28T21-54-03_428-jvmRun1 surefire9971871350273431687tmp surefire_0204644408548680580tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\nicol\Documents\Travail\2A\IN205\IN205_Projet1_DROUIN_Nicolas\bataille-navale\target\test-classes;C:\Users\nicol\Documents\Travail\2A\IN205\IN205_Projet1_DROUIN_Nicolas\bataille-navale\target\classes;C:\Users\nicol\.m2\repository\junit\junit\3.8.1\junit-3.8.1.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\nicol\AppData\Local\Temp\surefire6501989250427100652\surefirebooter15926953235748581968.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\nicol\AppData\Local\Temp\surefire3942970198101821880\surefirebooter9128809931463553680.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="15.0.2+7-27"/>

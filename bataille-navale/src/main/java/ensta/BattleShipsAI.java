@@ -60,23 +60,19 @@ public class BattleShipsAI implements Serializable {
      */
     public void putShips(AbstractShip ships[]) {
         int x, y, d, i;
-        //AbstractShip.Orientation o; //Création d'un objet orientation
-        Random rnd = new Random(); //Création d'un random seed
-        //AbstractShip.Orientation[] orientations = AbstractShip.Orientation.values(); //récupérations des orientations possibles
 
+        Random rnd = new Random();
 
         i = 1;
-        for (AbstractShip ship : ships) { //pour chaqeu bateau dans ships
+        for (AbstractShip ship : ships) {
             do {
                 x = rnd.nextInt(size);
                 y = rnd.nextInt(size);
                 d = rnd.nextInt(4);
-                ship.setDirection(Orientation.fromInt(d));
+                ship.setOrientation(Orientation.fromInt(d));
 
 
             } while(board.putShip(ship, x, y) == 0);
-
-            //System.out.println("Put ship n° " + i);
             i++;
 
 
@@ -89,18 +85,13 @@ public class BattleShipsAI implements Serializable {
      * @param coords array must be of size 2. Will hold the coord of the send hit.
      * @return the status of the hit.
      */
-    public Hit sendHit(int[] coords) { //on stocke les données dans coords
+    public Hit sendHit(int[] coords) {
 
-        //System.out.println("Entered AI sendHit function");
 
         int res[] = null;
         if (coords == null || coords.length < 2) {
             throw new IllegalArgumentException("must provide an initialized array of size 2");
         }
-
-        //System.out.println("passed error verification section");
-
-        // already found strike & orientation?
         if (lastVertical != null) {
             if (lastVertical) {
                 res = pickVCoord();
@@ -126,7 +117,6 @@ public class BattleShipsAI implements Serializable {
             }
         }
 
-        //System.out.println("Passed memory verification section");
 
         if (lastStrike == null) {
 
@@ -134,7 +124,6 @@ public class BattleShipsAI implements Serializable {
 
         }
 
-        //System.out.println("Ai chose to fire at target " + res[0] + ", " + res[1]);
 
         Hit hit = opponent.sendHit(res[0], res[1]);
         board.setHit(hit != Hit.MISS, res[0], res[1]);
@@ -165,44 +154,7 @@ public class BattleShipsAI implements Serializable {
     }
 
 
-    private boolean canPutShip(AbstractShip ship, int x, int y) {
-        Orientation o = ship.getDirection();
-        int dx = 0, dy = 0;
-        if (o == Orientation.EAST) {
-            if (x + ship.getSize() >= this.size) {
-                return false;
-            }
-            dx = 1;
-        } else if (o == Orientation.SOUTH) {
-            if (y + ship.getSize() >= this.size) {
-                return false;
-            }
-            dy = 1;
-        } else if (o == Orientation.NORTH) {
-            if (y + 1 - ship.getSize() < 0) {
-                return false;
-            }
-            dy = -1;
-        } else if (o == Orientation.WEST) {
-            if (x + 1 - ship.getSize() < 0) {
-                return false;
-            }
-            dx = -1;
-        }
 
-        int ix = x;
-        int iy = y;
-
-        for (int i = 0; i < ship.getSize(); ++i) {
-            if ( board.hasShip(ix, iy)) {
-                return false;
-            }
-            ix += dx;
-            iy += dy;
-        }
-
-        return true;
-    }
 
     private boolean guessOrientation(int[] c1, int[] c2) {
         return c1[0] == c2[0];
@@ -210,12 +162,9 @@ public class BattleShipsAI implements Serializable {
 
     private boolean isUndiscovered(int x, int y) {
         return (x >= 0 && x < size && y >= 0 && y < size && board.getHit(x, y) == null);
-        //renvoie true si inBounds et si la case ciblée n'a pas été tirée.
     }
 
     private int[] pickRandomCoord() {
-
-        //System.out.println("Entered random coordinates generation");
 
         Random rnd = new Random();
         int x;
@@ -224,7 +173,7 @@ public class BattleShipsAI implements Serializable {
         do {
             x = rnd.nextInt(size);
             y = rnd.nextInt(size);
-            //System.out.println("Last chosen coordinates : " + x + ", " + y + " among " + size);
+
         } while (!isUndiscovered(x, y));
 
         return new int[] {x, y};

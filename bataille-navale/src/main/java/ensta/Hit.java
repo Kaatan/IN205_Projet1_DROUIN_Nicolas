@@ -7,7 +7,8 @@ public enum Hit {
     DESTROYER(2, "Destroyer"),
     SUBMARINE(3, "Sous-marin"),
     BATTLESHIP(4, "Cuirassé"),
-    CARRIER(5, "Porte-avion");
+    CARRIER(5, "Porte-avion"),
+    ALREADYHIT(6, "Déjà touché");
 
     /* ***
      * Attributs
@@ -26,6 +27,12 @@ public enum Hit {
     /* ***
      * Méthodes
      */
+
+    /**
+     *
+     * @param value
+     * @return un Hit en fonction du code value associé
+     */
     public static Hit fromInt(int value) {
         for (Hit hit : Hit.values()) {
             if (hit.value == value) {
@@ -35,10 +42,18 @@ public enum Hit {
         throw new NoSuchElementException("No enum for value " + value);
     }
 
+    /**
+     *
+     * @return la valeur d'un Hit donné
+     */
     public int getValue(){
         return value;
     }
 
+    /**
+     *
+     * @return le label du hit pour l'affichage.
+     */
     public String toString() {
         return this.label;
     }

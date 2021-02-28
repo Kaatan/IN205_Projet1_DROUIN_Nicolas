@@ -22,16 +22,22 @@ public class Game {
     private int playerNumber;
     private int playerShotNumber;
     private int ennemyShotNumber;
-    private boolean isUnfair; //non utilisé
+    private boolean isUnfair;
 
     /* ***
      * Constructeurs
      */
     public Game() {}
 
+    /**
+     * Initialise le jeu
+     * Demande la taille de jeu
+     * Demande la difficulté
+     * Met en place la liste des bateaux
+     * @return le jeu mis à jour.
+     */
     public Game init() {
         if (!loadSave()) {
-            // init attributes
 
             String msg = "Bienvenue dans ce petit jeu de Bataille Navale !\n\nVoici les règles : \n";
             msg += "Tu vas d'abord choisir ta taille de partie. La taille de la partie détermine le nombre de bâteaux que chaque joueur possède, ainsi que la taille de la grille de jeu.\n";
@@ -44,10 +50,6 @@ public class Game {
 
             System.out.println(msg);
 
-            System.out.println("Entre ton nom:");
-
-            // TODO use a scanner to read player name
-            //sin = Scanner(System.in);
 
             playerShotNumber = 0;
             ennemyShotNumber = 0;
@@ -65,25 +67,21 @@ public class Game {
             AbstractShip[] ships = makeShips();
             AbstractShip[] ships2 = null;
 
-            // TODO init boards
+
             Board b1 = new Board("Board 1", size);
             Board b2 = new Board("Board 2", size);
 
 
-
-
-
-            // TODO init this.player1 & this.player2
             System.out.println("1 ou 2 joueurs ?");
             Scanner sin2 = new Scanner(System.in);
             int stop = 0;
 
             do{
                 try{
-                    playerNumber = Integer.parseInt(sin2.nextLine()); //bien vérifier si le nombre est valide
+                    playerNumber = Integer.parseInt(sin2.nextLine());
                     stop=1;
                 }catch (Exception e) {
-                    System.out.println("Réponse non valide, choisissez 1 ou 2");
+                    System.out.println("Réponse non valide, choisissez 1 ou 2.");
                 }
             }while (stop==0);
 
@@ -91,7 +89,7 @@ public class Game {
             if (playerNumber == 1){
                 this.player1 = new Player(b1, b2, ships);
                 ships2 = setDifficulty();
-                this.player2 = new AIPlayer(b2, b1, ships2); //potentiellement un IA player, l'adversaire
+                this.player2 = new AIPlayer(b2, b1, ships2);
 
 
             }
@@ -104,8 +102,8 @@ public class Game {
 
 
             b1.print();
-            // place player ships
             player1.putShips(ships.length);
+
             if (playerNumber==2){
                 sleep(1000);
 
@@ -114,7 +112,9 @@ public class Game {
                 sleep(1000);
                 b2.print();
             }
+
             player2.putShips(ships2.length);
+
             if (playerNumber==2){
                 sleep(1000);
 
@@ -131,7 +131,11 @@ public class Game {
      * Méthodes
      */
 
-    private AbstractShip[] makeShips(){ //dépend de la taille de la partie
+    /**
+     *
+     * @return la liste des bateaux valide pour le mode de jeu sélectionné
+     */
+    private AbstractShip[] makeShips(){
         AbstractShip[] ships = null;
 
         if (gameSize==1){
@@ -178,6 +182,11 @@ public class Game {
 
     }
 
+
+    /**
+     * Met à jour la difficulté du jeu et les paramètres associés (nombre de tirs autorisés, etc)
+     * @return la liste mise à jour des bateaux pour l'IA
+     */
     private AbstractShip[] setDifficulty(){
 
         String msg = "Choisis ta diffficulté  : \n";
@@ -207,21 +216,21 @@ public class Game {
             }catch (Exception e) {
                 System.out.println("Choix incorrect, veuillez réessayer.");
             }
-            System.out.println("Difficulté choisie : " + diff);
+
 
             if (diff==1 || diff == 2 || diff == 3){
 
 
                 if (diff == 1){
-                    System.out.println("Difficulté : Facile !");
+                    System.out.println("\nDifficulté : Facile !\n");
                     playerShotNumber+= 1;
                 }
                 else if(diff == 3){
-                    System.out.println("Difficulté : Difficile !");
+                    System.out.println("\nDifficulté : Difficile !\n");
                     ennemyShotNumber+= 1;
                 }
                 else{
-                    System.out.println("Difficulté : Moyenne !");
+                    System.out.println("\nDifficulté : Moyenne !\n");
                 }
             }
 
@@ -233,47 +242,35 @@ public class Game {
                     ships2[i] = ships[i];
                 }
 
-
                 ships2[ships.length] = new Destroyer();
-
-
                 ennemyShotNumber += 1;
-
-                System.out.println("Difficulté : Très Difficile !");
-
+                System.out.println("\nDifficulté : Très Difficile !\n");
             }
 
             if (diff == 5){
-
                 ships2 = new AbstractShip[ships.length+2];
-
                 for (int i = 0; i < ships.length; i++){
                     ships2[i] = ships[i];
                 }
-
                 ships2[ships.length] = new Destroyer();
                 ships2[ships.length + 1] = new Destroyer();
                 ennemyShotNumber += 2;
-
-                isUnfair = true; //a changer pour un bool unfair sans doute.
-                System.out.println("Difficulté  : Injuste ! Bon courage ! (vous en aurez besoin)");
-
+                isUnfair = true;
+                System.out.println("\nDifficulté  : Injuste ! Bon courage ! (vous en aurez besoin)\n");
             }
 
         }
-
-        System.out.println("Nombre de bâteaux dans ships 2 " + ships2.length + " nombre de bateaux dans ships : " + ships.length);
 
         return ships2;
 
     }
 
 
-
-
+    /**
+     * Met à jour les paramètres du jeu pour la taille de jeu choisie (dans la fonction par un appel utilisateur)
+     * @return un entier correspondant à la taille du tableau
+     */
     private int chooseGameSize(){
-
-
         String msg = "Choisis ta partie :\n1 : Partie courte. Chaque joueur a seulement un Destroyer, un Sous-Marin et un Cuirassé, sur une carte de taille 7 * 7.\n";
         msg += "2 : Partie moyenne : Chaque joueur a un Destroyer, deux Sous-Marins, un Cuirassé et un Porte-Avions, sur une carte de taille 10 * 10.\n";
         msg+= "3 : Partie grande : Chaque joueur a deux Destroyer, deux Sous-Marins, deux Cuirassé et un Porte-Avions, sur une carte de taille 15*15, chaque joueur peut tirer deux fois par tour minimum.\n";
@@ -282,18 +279,12 @@ public class Game {
         System.out.println(msg);
         int size = 0;
 
-
         Scanner sin2 = new Scanner(System.in);
         try{
             size = Integer.parseInt(sin2.nextLine());
         }catch (Exception e) {
-            // nop
         }
-
         gameSize = size;
-
-
-
         if (size==1){
             return 7;
         }
@@ -302,11 +293,11 @@ public class Game {
         }
         if (size == 3){
             playerShotNumber = 1;
-            return 13;
+            return 14;
         }
         if (size==4){
             playerShotNumber = 2;
-            return 16;
+            return 18;
         }
         return 0;
     }
@@ -319,56 +310,33 @@ public class Game {
         }
     }
 
-
+    /**
+     * Boucle principale du jeu. Gère les tours de jeu, à un ou deux joueurs, les pauses et l'affichage.
+     */
     public void run() {
         int[] coords = new int[2];
         Board b1 = player1.board;
         Board b2 = player2.board;
         Hit hit;
         int numberShot;
-        boolean fullStrike = false; //true lorsque l'entité a fini tous ses tirs
-
-        // main loop
+        boolean fullStrike = false;
 
         boolean done;
         boolean strike = false;
 
-
         do {
-
             numberShot = 0;
-
-
             do{
-                hit = player1.sendHit(coords); // TODO player1 send a hit
-                strike = (hit != Hit.MISS); // TODO set this hit on his board (b1)
+                hit = player1.sendHit(coords);
+                strike = (hit != Hit.MISS);
                 b1.setHit(strike, coords[0], coords[1]);
-
-
-
-
                 b1.print();
                 System.out.println(makeHitMessage(false /* outgoing hit */, coords, hit));
-
                 done = updateScore();
-                if(done){
-                    System.out.println("Match should be over");
-                }
-                else{
-                    System.out.println("Match continues");
-                }
-
-                numberShot++; //un tir, échoué ou non, a été réalisé.
-                //System.out.println("Tirs effectués : " + numberShot + " Tirs totaux : " +playerShotNumber + " Validation du FullStrike ? ");
-
-                fullStrike = ((!strike & numberShot > playerShotNumber) || (isUnfair && numberShot > playerShotNumber)); //si le tir a échoué et que le joueur a réalisé tous ses tirs, ou que la difficulté est injuste et que le joueur a tiré son max :
-
-
-
+                numberShot++;
+                fullStrike = ((!strike & numberShot > playerShotNumber) || (isUnfair && numberShot > playerShotNumber));
 
             }while (!done && !fullStrike);
-
-
 
             save();
             numberShot = 0;
@@ -380,49 +348,30 @@ public class Game {
                 sleep(1500);
                 b2.print();
             }
-
-
-
                 if(!done) {
-
 
                     do {
                         fullStrike = false;
 
-
-                        hit = player2.sendHit(coords); // TODO player2 send a hit.
+                        hit = player2.sendHit(coords);
 
                         strike = (hit != Hit.MISS);
                         if (playerNumber == 2) {
                             b2.print();
                         }
-
                         System.out.println(makeHitMessage(true /* incoming hit */, coords, hit));
                         done = updateScore();
-
-
                         numberShot++;
 
-                        fullStrike = (!strike & numberShot > ennemyShotNumber); //si le tir a échoué et que l'ennemi a réalisé tous ses tirs :
-
-
+                        fullStrike = (!strike & numberShot > ennemyShotNumber);
                         done = updateScore();
-                        if (done) {
-                            System.out.println("Match should be over");
-                        } else {
-                            System.out.println("Match continues");
-                        }
-
                         if (!done) {
                             save();
                         }
-
                         if (playerNumber == 1) {
                             sleep(1000);
                             b1.print();
                         }
-
-
                     } while (!fullStrike && !done);
 
                     if (playerNumber == 2 && !done) {
@@ -433,19 +382,13 @@ public class Game {
                         sleep(1500);
                         b1.print();
                     }
-
-
                 }
-
-
         } while (!done);
 
         SAVE_FILE.delete();
-        System.out.println(String.format("Le joueur %d gagne ! ", player1.lose ? 2 : 1));
-        //sin.close();
+        System.out.println(String.format("\n\nLe joueur %d gagne ! ", player1.lose ? 2 : 1));
+
     }
-
-
     private void save() {
         /*try {
             // TODO bonus 2 : uncomment
@@ -479,17 +422,14 @@ public class Game {
             for (AbstractShip ship : player.getShips()) {
                 if (ship.isSunk()) {
                     destroyed++;
-                    System.out.println(destroyed + " ships destroyed.");
+
                 }
             }
 
             player.destroyedCount = destroyed;
-            System.out.println(player.destroyedCount + " ships destroyed. (player.destroyedcount) on " + player.getShips().length);
             player.lose = (destroyed == player.getShips().length);
-
-
             if (player.lose) {
-                System.out.println("Player lost");
+
                 return true;
             }
         }
@@ -506,7 +446,6 @@ public class Game {
                 break;
             case STRIKE:
                 msg = hit.toString();
-                System.out.println("Touché");
                 color = ColorUtil.Color.RED;
                 break;
             default:
@@ -517,10 +456,6 @@ public class Game {
                 ((char) ('A' + coords[0])),
                 (coords[1] + 1), msg);
         return ColorUtil.colorize(msg, color);
-    }
-
-    private static List<AbstractShip> createDefaultShips() {
-        return Arrays.asList(new AbstractShip[]{new Destroyer(), new Submarine(), new Submarine(), new BattleShip(), new Carrier()});
     }
 
     public static void main(String args[]) {

@@ -3,7 +3,7 @@ package ensta;
 
 
 
-public class Board implements IBoard { //like that ?
+public class Board implements IBoard {
     private String boardName;
     private Boolean boardStrikes[];
     private ShipState boardBoats[];
@@ -13,9 +13,11 @@ public class Board implements IBoard { //like that ?
          return boardSize;
 
     }
+    /**
+     * Initialise les tableaux de l'objet
+     * **/
+    private void Board_Maker(){
 
-    private void Board_Maker(){ /** Initialise les tableaux de l'objet **/
-        //System.out.println("Entered Board Maker\n");
         boardStrikes = new Boolean[boardSize*boardSize];
         for (int i =0; i<boardSize*boardSize; i++){
             boardStrikes[i]=null;
@@ -26,23 +28,35 @@ public class Board implements IBoard { //like that ?
         }
     }
 
-
+    /**
+     * constructeur
+     * @param name
+     * @param size
+     */
     public Board (String name, int size){
         /**Size correspond à la largeur du tableau**/
-        //System.out.println("Entered Constructor\n");
+
         boardName = name;
         boardSize = size;
         Board_Maker();
 
     }
 
+    /**
+     * Constructeur
+     * @param name
+     */
     public Board (String name){
         boardName = name;
         boardSize=10;
         Board_Maker();
     }
 
-
+    /**
+     * Sous fonction pour ajouter un nombre donné d'esapces
+     * @param spaceNumber
+     * @return un string contenant spaceNumber espaces
+     */
     private static String addSpaces(int spaceNumber){
         String exit = "";
         for (int i=0; i< spaceNumber; i++){
@@ -51,6 +65,9 @@ public class Board implements IBoard { //like that ?
         return exit;
     }
 
+    /**
+     * @return une ligne de lettres pour l'affichage du tableau
+     */
     private String letterLine(){
         String exit = "";
         for (int i=0; i<boardSize; i++){
@@ -60,18 +77,24 @@ public class Board implements IBoard { //like that ?
         return exit;
     }
 
+    /**
+     *
+     * @param numLine
+     * @return un String contenant la ligne numLine du board
+     */
     private String addBoardLine (int numLine){
         Boolean tile;
         String exit = "";
         exit+= numLine+1 + " ";
-        if (numLine<9){ // car à 10 il y a un char de plus
+
+        if (numLine<9){
             exit+=" ";
         }
 
-        for (int i = 0; i<boardSize; i++) { //prtie pour les bateaux
+        for (int i = 0; i<boardSize; i++) {
             if (boardBoats[i + boardSize * numLine].getIfLinked() == true) {
                 exit += boardBoats[i + boardSize * numLine].toString() + " ";
-                //System.out.println("Is linked is true for tile (" + i +", "+numLine + ")");
+
             } else {
                 exit += ". ";
             }
@@ -79,7 +102,7 @@ public class Board implements IBoard { //like that ?
 
         exit+="    ";//Middleoffset
 
-        for (int i = 0; i<boardSize; i++){ //partie pour les touchés
+        for (int i = 0; i<boardSize; i++){
             tile = boardStrikes[i + boardSize * numLine];
             if (tile == null){
                 exit += ". ";
@@ -121,7 +144,7 @@ public class Board implements IBoard { //like that ?
             exit+=addBoardLine(i);
         }
 
-        exit+="\r"; //permet de recouvrir la même ligne à chaque print
+        exit+="\r";
 
         return exit;
 
@@ -154,21 +177,27 @@ public class Board implements IBoard { //like that ?
     }
 
 
-
-    public int putShip(AbstractShip ship, int x, int y){ //renvoie 1 si succès, 0  si échec
+    /**
+     * Place un bateau sur le board
+     * @param ship
+     * @param x
+     * @param y
+     * @return 0 si échec, 1 si succès
+     */
+    public int putShip(AbstractShip ship, int x, int y){
 
         int x0;
         int y0;
         int i = 0;
         int stop=0;
         int shipSize = ship.getSize();
-        Orientation shipDirection = ship.getDirection();
+        Orientation shipOrientation = ship.getOrientation();
         char shipLabel = ship.getLabel();
 
 
         while (i<shipSize && stop == 0){
-            x0 = x + i* AbstractShip.convertHorizDirec(shipDirection); //pour les méthodes statics, mettre Class.method()
-            y0 = y + i* AbstractShip.convertVertDirec(shipDirection);
+            x0 = x + i* AbstractShip.convertHorizDirec(shipOrientation);
+            y0 = y + i* AbstractShip.convertVertDirec(shipOrientation);
 
             if (!(inBounds(x0, y0))){
                 return 0;
@@ -183,8 +212,8 @@ public class Board implements IBoard { //like that ?
 
         if (stop==0){
             for (i=0; i<shipSize; i++ ){
-                x0 = x + i * AbstractShip.convertHorizDirec(shipDirection);
-                y0 = y + i*AbstractShip.convertVertDirec(shipDirection);
+                x0 = x + i * AbstractShip.convertHorizDirec(shipOrientation);
+                y0 = y + i*AbstractShip.convertVertDirec(shipOrientation);
                 boardBoats[x0 + y0*boardSize].setShip(ship);
 
                 //System.out.println("Ship put at " + x0 + " and " + y0 + " placement number " + i + " and ship size is " + shipSize + "\n");
@@ -197,9 +226,14 @@ public class Board implements IBoard { //like that ?
 
     }
 
-    //Gestion des dégâts
+    /** *Gestion des dégâts**/
 
-
+    /**
+     * Marque le tableau comme touché
+     * @param hit
+     * @param x
+     * @param y
+     */
     public void setHit(boolean hit, int x, int y){
         if (inBounds(x, y)){
             boardStrikes[x + y * boardSize] = hit;
@@ -207,7 +241,13 @@ public class Board implements IBoard { //like that ?
 
     }
 
-    public Boolean getHit(int x, int y){ //vérifie si la case est touchée ou si elle sra touchée lors du tir ?
+    /**
+     *
+     * @param x
+     * @param y
+     * @return la valeur de la case demandée : si elle a été touchée ou non
+     */
+    public Boolean getHit(int x, int y){
         if (inBounds(x, y)){
             return boardStrikes[x + y * boardSize];
         }
@@ -215,8 +255,12 @@ public class Board implements IBoard { //like that ?
     }
 
 
-
-    public Hit shipConversion(char label){ //on peut utiliser fromInt du fichier Hit qui convertit la taille du navire en enum
+    /**
+     *
+     * @param label
+     * @return un Hit correspondant au label demandé
+     */
+    public Hit shipConversion(char label){
         Hit hit = Hit.MISS;
         if (label == 'D'){
             hit= Hit.DESTROYER;
@@ -233,35 +277,36 @@ public class Board implements IBoard { //like that ?
         return hit;
     }
 
+    /**
+     * Marque un tir sur le tableau à l'endroit indiqué
+     * @param x
+     * @param y
+     * @return le hit correspondant
+     */
     public Hit sendHit(int x, int y){
         Hit hit = null;
         if (!inBounds(x, y)){
             return null;
         }
         ShipState tile = boardBoats[x + boardSize * y];
-        if ( tile.getIfLinked() == true){//on vérifie si on a bien un bateau en dessous
-            if (tile.isStruck()){ //on vérifie si la case n'a pas déjjà été touchée
+        if (tile.getIfLinked() == true){
+            if (tile.isStruck()){
                 System.out.println("Case détruite touchée à nouveau en " + (char)('A'+x) + ", " + (y+1));
             }
-            else { //sinon, on la détruit
-                //on actualise d'abord le tableau des bâteaux :
-                //System.out.println("Navire touché en " + (char)('A'+x) + ", " + (y+1));
+
+            else {
                 tile.addStrike();
 
-                if (tile.isSunk()){ //si le bâteau a coulé à cause de ce tir,
-                    //hit = shipConversion(tile.getShip().getLabel());
+                if (tile.isSunk()){
                     hit = Hit.fromInt(tile.getShip().getSize());
-                    //System.out.println("Le navire de label " + tile.getShip().getLabel() + " a coulé");
                 }
-                else{ //le bâteau n'a pas coulé
-
+                else{
                     hit = Hit.STRIKE;
                 }
             }
 
         }
-        else{ //s'il n'y a pas de bâteau :
-            //System.out.println("Manqué en " + (char)('A'+x) + ", " + (y+1));
+        else{
             hit = Hit.MISS;
         }
         return hit;
